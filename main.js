@@ -10,15 +10,10 @@ function centerView(subview, superview, spacing = 0) {
     UIView_instance_setTranslatesAutoresizingMaskIntoConstraints_(subview, 0);
     let XAnchor = UIView_instance_centerXAnchor(subview);
     let YAnchor = UIView_instance_centerYAnchor(subview);
-//    log_object("XAnchor", XAnchor);
-//    log_object("YAnchor", YAnchor);
     let superXAnchor = UIView_instance_centerXAnchor(superview);
     let superYAnchor = UIView_instance_centerYAnchor(superview);
-//    log_object("superXAnchor", superXAnchor);
-//    log_object("superYAnchor", superYAnchor);
     let constraints = NSArray([NSLayoutAnchor_instance_constraintEqualToAnchor_(XAnchor, superXAnchor), NSLayoutAnchor_instance_constraintEqualToAnchor_constant_(YAnchor, superYAnchor, spacing)]);
     NSLayoutConstraint_class_activateConstraints_(constraints);
-//    log_object("constraints", constraints);
 }
 
 function UIColor(red, green, blue, alpha = 255) {
@@ -61,11 +56,15 @@ function main(self) {
     });
     log_object("animationBlock", animationBlock);
 
-    let buttonBlock = makeBlock(function() {
+    let buttonBlock = makeBlock(function(context) {
+        // x0 is the block and x1 is the first actual argument
+        let action = context.x1; // UIAction* action
+        log_object("action", action);
+        
         let doneAction = UIAlertAction_class_actionWithTitle_style_handler_(NSString("Done"), 1, 0);
         log_object("doneAction", doneAction);
 
-        let alert = UIAlertController_class_alertControllerWithTitle_message_preferredStyle_(NSString("TITLE"), NSString("MESSAGE"), 1);
+        let alert = UIAlertController_class_alertControllerWithTitle_message_preferredStyle_(NSString("Example Alert"), NSObject_instance_description(action), 1);
         UIAlertController_instance_addAction_(alert, doneAction);
         log_object("alert", alert);
         
@@ -88,7 +87,7 @@ function main(self) {
     log_object("button", button);
     
     //let color = randomColor();
-    let color = UIColor(71, 94, 173);
+    let color = UIColor(179, 66, 245);
     log_object("color", color);
     
     UIView_instance_setBackgroundColor_(view, color);
