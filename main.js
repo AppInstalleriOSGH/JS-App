@@ -44,7 +44,7 @@ function main(self) {
     let nsString = NSString("Hello, World!");
     log_object("nsString", nsString);
     
-    let label = UIView_instance_initWithFrame_(UILabel_class_alloc(), {x: 0, y: 0, width: 150, height: 40});
+    let label = UIView_instance_initWithFrame_(UILabel_class_alloc(), CGRectMake(0.0, 0.0, 150.0, 40.0));
     UILabel_instance_setText_(label, nsString);
     UILabel_instance_setTextAlignment_(label, 1);
     UIView_instance_addSubview_(view, label);
@@ -75,7 +75,7 @@ function main(self) {
     log_object("action", action);
 
     let button = UIButton_class_buttonWithType_(1);
-    UIView_instance_setFrame_(button, {x: 0, y: 0, width: 85, height: 40});
+    UIView_instance_setFrame_(button, CGRectMake(0.0, 0.0, 85.0, 40.0));
     UIButton_instance_setTitle_forState_(button, NSString("Tap Me"), 0);
     UIButton_instance_setTitleColor_forState_(button, UIColor_class_labelColor(), 0);
     UIControl_instance_addAction_forControlEvents_(button, action, 1 << 6);

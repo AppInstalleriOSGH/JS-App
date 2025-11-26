@@ -22,6 +22,10 @@ function NSArray(jsArr) {
     return NSArray_instance_initWithObjects_count_(NSArray_class_alloc(), bytes, jsArr.length);;
 }
 
+function CGRectMake(x, y, width, height) {
+    return {x: x, y: y, width: width, height: height};
+}
+
 function getObjectDescription(object) {
     return UTF8String(NSObject_instance_description(object))
 }
