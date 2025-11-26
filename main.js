@@ -27,17 +27,15 @@ function randomColor() {
     return UIColor(red, green, blue);
 }
 
-function main(self) {
-    log_object("self", self);
-    
+function main() {
     let mainScreenBounds = UIView_instance_bounds(UIScreen_class_mainScreen());
     log(`width: ${mainScreenBounds.width.toFixed(2)}`);
     log(`height: ${mainScreenBounds.height.toFixed(2)}`);
     
-    let rootViewController = NSObject_instance_init(UIViewController_class_new());
-    log_object("rootViewController", rootViewController);
+    let viewController = NSObject_instance_init(UIViewController_class_new());
+    log_object("viewController", viewController);
     
-    let view = UIViewController_instance_view(rootViewController);
+    let view = UIViewController_instance_view(viewController);
     log_object("view", view);
     
     let nsString = NSString("Hello, World!");
@@ -68,7 +66,7 @@ function main(self) {
         UIAlertController_instance_addAction_(alert, doneAction);
         log_object("alert", alert);
         
-        UIViewController_instance_presentViewController_animated_completion_(rootViewController, alert, 1, 0);
+        UIViewController_instance_presentViewController_animated_completion_(viewController, alert, 1, 0);
         
         //UIView_class_animateWithDuration_delay_options_animations_completion_(5, 0, 0 << 16, animationBlock, 0);
     });
@@ -89,13 +87,23 @@ function main(self) {
     //let color = randomColor();
     let color = UIColor(179, 66, 245);
     log_object("color", color);
-    
     UIView_instance_setBackgroundColor_(view, color);
     
-    let window = UIView_instance_initWithFrame_(UIWindow_class_alloc(), mainScreenBounds);
-    log_object("window", window);
+    let application = UIApplication_class_sharedApplication();
+    log_object("application", application);
+    
+    let keyWindow = UIApplication_instance_keyWindow(application);
+    log_object("keyWindow", keyWindow);
+    
+    let rootViewController = UIWindow_instance_rootViewController(keyWindow);
+    log_object("rootViewController", rootViewController);
+    
+    UIViewController_instance_presentViewController_animated_completion_(rootViewController, viewController, 1, 0);
 
-    UIWindow_instance_setRootViewController_(window, rootViewController);
-    UIWindow_instance_makeKeyAndVisible(window);
-    AppDelegate_instance_setWindow_(self, window);
+//    let window = UIView_instance_initWithFrame_(UIWindow_class_alloc(), mainScreenBounds);
+//    log_object("window", window);
+//
+//    UIWindow_instance_setRootViewController_(window, rootViewController);
+//    UIWindow_instance_makeKeyAndVisible(window);
+//    AppDelegate_instance_setWindow_(self, window);
 }
