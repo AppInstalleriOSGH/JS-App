@@ -21,11 +21,15 @@ function centerView(subview, superview, spacing = 0) {
 //    log_object("constraints", constraints);
 }
 
+function UIColor(red, green, blue, alpha = 255) {
+    return UIColor_class_colorWithRed_green_blue_alpha_(red / 255, green / 255, blue / 255, alpha / 255);
+}
+
 function randomColor() {
     let red = Math.floor(Math.random() * 256);
     let green = Math.floor(Math.random() * 256);
     let blue = Math.floor(Math.random() * 256);
-    return UIColor_class_colorWithRed_green_blue_alpha_(red / 255, green / 255, blue / 255, 1);
+    return UIColor(red, green, blue);
 }
 
 function main(self) {
@@ -83,7 +87,8 @@ function main(self) {
     centerView(button, view, 20);
     log_object("button", button);
     
-    let color = randomColor();
+    //let color = randomColor();
+    let color = UIColor(71, 94, 173);
     log_object("color", color);
     
     UIView_instance_setBackgroundColor_(view, color);
