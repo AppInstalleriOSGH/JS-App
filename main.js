@@ -27,12 +27,15 @@ function randomColor() {
     return UIColor(red, green, blue);
 }
 
+var viewController = 0;
+var buttonBlock = 0;
+
 function main() {
     let mainScreenBounds = UIView_instance_bounds(UIScreen_class_mainScreen());
     log(`width: ${mainScreenBounds.width.toFixed(2)}`);
     log(`height: ${mainScreenBounds.height.toFixed(2)}`);
     
-    let viewController = NSObject_instance_init(UIViewController_class_new());
+    viewController = NSObject_instance_init(UIViewController_class_new());
     log_object("viewController", viewController);
     
     let view = UIViewController_instance_view(viewController);
@@ -47,14 +50,8 @@ function main() {
     UIView_instance_addSubview_(view, label);
     centerView(label, view);
     log_object("label", label);
-    
-    let animationBlock = makeBlock(function() {
-        log(`Hello from animationBlock!!`);
-        UIView_instance_setBackgroundColor_(view, randomColor());
-    });
-    log_object("animationBlock", animationBlock);
 
-    let buttonBlock = makeBlock(function(context) {
+    buttonBlock = makeBlock(function(context) {
         // x0 is the block and x1 is the first actual argument
         let action = context.x1; // UIAction* action
         log_object("action", action);
@@ -67,8 +64,6 @@ function main() {
         log_object("alert", alert);
         
         UIViewController_instance_presentViewController_animated_completion_(viewController, alert, 1, 0);
-        
-        //UIView_class_animateWithDuration_delay_options_animations_completion_(5, 0, 0 << 16, animationBlock, 0);
     });
     log_object("buttonBlock", buttonBlock);
     
@@ -99,11 +94,12 @@ function main() {
     log_object("rootViewController", rootViewController);
     
     UIViewController_instance_presentViewController_animated_completion_(rootViewController, viewController, 1, 0);
+}
 
-//    let window = UIView_instance_initWithFrame_(UIWindow_class_alloc(), mainScreenBounds);
-//    log_object("window", window);
-//
-//    UIWindow_instance_setRootViewController_(window, rootViewController);
-//    UIWindow_instance_makeKeyAndVisible(window);
-//    AppDelegate_instance_setWindow_(self, window);
+function stop() {
+    let presentingViewController = UIViewController_instance_presentingViewController(viewController);
+    log_object("presentingViewController", presentingViewController);
+    if (presentingViewController != 0) {
+        UIViewController_instance_dismissViewControllerAnimated_completion_(presentingViewController, 1, 0);
+    }
 }
